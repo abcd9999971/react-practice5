@@ -2,6 +2,8 @@
 //Attempted import error: 'useForm' is not exported from 'react-hook-form' (imported as 'useForm').
 //react-hook-form/issues/11284
 
+import { useRef } from 'react';
+
 import { useForm, SubmitHandler } from 'react-hook-form'
 
 import type { TodoStyle } from '@/type.ts';
@@ -10,41 +12,44 @@ import type { TodoStyle } from '@/type.ts';
 const FIELD_NAMES = {
   title: 'title',
   date: 'date',
-  isCompleted: 'isCompleted',
+  isSelected: 'isSelected',
 } as const;
 
-//interface
-interface TodoAddFormProps {
-  setTodos: React.Dispatch<React.SetStateAction<TodoStyle[]>>;
+type TodoAddFormProps = {
+  handleAddTodo: (data: TodoStyle) => void;
 }
 
 //component
-export const TodoAddForm = ({setTodos}:TodoAddFormProps) => {
-      const {
+export const TodoAddForm = ({handleAddTodo}:TodoAddFormProps) => {
+  
+  const indexRef = useRef(0);    
+  
+  const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
-      } = useForm<TodoStyle>({
-        defaultValues: {
-          [FIELD_NAMES.date]: new Date().toISOString().split('T')[0], // YYYY-MM-DD
-          [FIELD_NAMES.isCompleted]: false, // default value 
-        },
-      });
+  } = useForm<TodoStyle>({
+    defaultValues: {
+      [FIELD_NAMES.date]: new Date().toISOString().split('T')[0], // YYYY-MM-DD
+      [FIELD_NAMES.isSelected]: false, // default value 
+    },
+  });
 
       const onSubmit: SubmitHandler<TodoStyle> = (data) => {
-        setTodos((prevTodos) => [...prevTodos, data]);
-        console.log(data); 
+        handleAddTodo({ ...data, id: indexRef.current });
+        console.log({ ...data, id: indexRef.current }); 
+        indexRef.current += 1; // increment the id for next todo
       };
       
-      console.log(watch(FIELD_NAMES.title)) // watch input value by passing the name of it
+      // watch input value by passing the name of it 
+      // console.log(watch(FIELD_NAMES.title)) 
 
       return (
         <form onSubmit={handleSubmit(onSubmit)}>
           <input {...register(FIELD_NAMES.title, { required: true })} />
           {errors.title && <span>This field is required</span>}
-          
-          <button type='submit'/>
+          <button type='submit'>追加</button>
         </form>
       )
     }

@@ -13,11 +13,23 @@ export default function Home() {
 
   const [todos, setTodos] = useState<TodoStyle[]>([]);
 
+  const handleAddTodo = (data:TodoStyle) => {
+      setTodos((prevTodos) => [...prevTodos, data]);
+    };  
+  
+    const handleDelete = (id: (number[])) => {
+    // if id is null, delete all todos
+    if (id != null) 
+      setTodos((prevTodos) => prevTodos.filter((todo) => !id.includes(todo.id)))
+    else
+      setTodos([]);
+  };
+
   return (
     <div>
       <h1>Todo app</h1>
-      <TodoAddForm setTodos={setTodos} />
-      <TodoList todos = {todos}/>
+      <TodoAddForm handleAddTodo={handleAddTodo} />
+      <TodoList todos = {todos} handleDelete = {handleDelete}/>
     </div>
   );
 }
