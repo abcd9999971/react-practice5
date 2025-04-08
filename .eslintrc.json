@@ -38,8 +38,7 @@
   "object-shorthand": "error",
   "no-array-constructor": "error",
   "prefer-destructuring": "error",
-  //quotesはなぜか動作しない
-  // "quotes": ["error", "single"],
+  "quotes": ["error", "single"],
   "prefer-template": "error",
   "no-duplicate-imports": "error",
   "dot-notation": "error",
