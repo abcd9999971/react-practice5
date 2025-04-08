@@ -1,17 +1,23 @@
-'use client';  
+import type { TodoStyle } from '@/type.ts';
 
-import { useForm } from "react-hook-form"
+interface TodoListProps {
+  todos: TodoStyle[];  
+}
 
-import type { TodoStyle } from "@/type.ts";
-
-export const TodoList = () => {
-    const { getValues } = useForm<TodoStyle>();
-
-    const allValues = getValues();
-    console.log(allValues);
+export const TodoList = ({todos}:TodoListProps) => {
   return (
     <div>
-        <p>List</p>
+      <h2>Todo List</h2>
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            <input type="checkbox" checked={todo.isCompleted} />
+            {todo.title}
+            <span>{todo.date}</span>
+            <button>Delete</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

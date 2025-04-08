@@ -13,8 +13,13 @@ const FIELD_NAMES = {
   isCompleted: 'isCompleted',
 } as const;
 
+//interface
+interface TodoAddFormProps {
+  setTodos: React.Dispatch<React.SetStateAction<TodoStyle[]>>;
+}
+
 //component
-export const TodoAddForm = () => {
+export const TodoAddForm = ({setTodos}:TodoAddFormProps) => {
       const {
         register,
         handleSubmit,
@@ -27,7 +32,10 @@ export const TodoAddForm = () => {
         },
       });
 
-      const onSubmit: SubmitHandler<TodoStyle> = (data) => console.log(data)
+      const onSubmit: SubmitHandler<TodoStyle> = (data) => {
+        setTodos((prevTodos) => [...prevTodos, data]);
+        console.log(data); 
+      };
       
       console.log(watch(FIELD_NAMES.title)) // watch input value by passing the name of it
 
