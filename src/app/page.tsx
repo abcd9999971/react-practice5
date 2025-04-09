@@ -17,7 +17,7 @@ export default function Home() {
       setTodos((prevTodos) => [...prevTodos, data]);
     };  
   
-    const handleDelete = (id: (number[])) => {
+  const handleDelete = (id: (number[])) => {
     // if id is null, delete all todos
     if (id != null) 
       setTodos((prevTodos) => prevTodos.filter((todo) => !id.includes(todo.id)))

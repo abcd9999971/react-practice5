@@ -1,61 +1,71 @@
-import { useState } from 'react';
+'use client';
 
-import type { TodoStyle } from '@/type.ts';
+import  { useMemo, useState } from 'react';
+
+import type { TodoStyle } from '@/type';
 
 type TodoListProps = {
   todos: TodoStyle[];
-  handleDelete: (id: ( number[])) => void;  
-}
+  handleDelete: (ids: number[]) => void;
+};
 
-export const TodoList = ({todos,handleDelete}:TodoListProps) => {
+export const TodoList = ({ todos, handleDelete }: TodoListProps) => {
 
-  const [IsChecked, setIsChecked] = useState<number[]>([]);
-  const [CheckedAll, setCheckedAll] = useState(false);
-  
-  const handleChange = (id: number) => {
-    if(IsChecked.includes(id))
-      setIsChecked(IsChecked.filter((item) => item !== id));
-    else
-      setIsChecked([...IsChecked, id]);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+
+  const allIds = todos.map((todo) => todo.id);
+  const isAllSelected = useMemo(() => (selectedIds.length === todos.length) && todos.length > 0, [selectedIds, todos]);
+
+  const toggleSelect = (id: number) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
   };
 
-  const AllId = todos.map(todo => todo.id);
+  const toggleSelectAll = () => {
+    setSelectedIds(isAllSelected ? [] : allIds);
+  };
 
-  const handleChangeAll = (e:boolean) => {
-    (e)?setIsChecked(AllId):setIsChecked([])
+  const handleDeleteSelected = () => {
+    handleDelete(selectedIds);
+    setSelectedIds([]);
   };
 
   return (
     <div>
       <h2>
-        <input 
-          type='checkbox'
-          checked = {CheckedAll}
-          onChange = { 
-          (e) => {setCheckedAll(e.target.checked); handleChangeAll(e.target.checked); }}
+        <input
+          type="checkbox"
+          checked={isAllSelected}
+          onChange={toggleSelectAll}
         />
-        {(IsChecked.length > 0 || CheckedAll === true) && (
-          <button onClick={() => { handleDelete(IsChecked); setIsChecked([]); setCheckedAll(false); }}>
-            Delete Selected
-          </button>
+        {(selectedIds.length > 0) && (
+          <button onClick={handleDeleteSelected}>Delete Selected</button>
         )}
       </h2>
       <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            <input 
-              type="checkbox" 
-              checked={ CheckedAll || IsChecked.includes(todo.id) }
-              onChange={() => handleChange(todo.id)} />
-            {todo.title}
-            <span>{todo.date}</span>
-            <button 
-              onClick = {() => {handleDelete([todo.id]); setIsChecked(IsChecked.filter((item) => item !== todo.id));}}>
-            Delete</button>
+        {todos.map(({ id, title, date }) => (
+          <li key={id}>
+            <input
+              type="checkbox"
+              checked={selectedIds.includes(id)}
+              onChange={() => toggleSelect(id)}
+            />
+            {title}
+            <span>{date}</span>
+            <button
+              onClick={() => {
+                handleDelete([id]);
+                setSelectedIds((prev) => prev.filter((item) => item !== id));
+              }}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
     </div>
   );
-}
+};
+
 export default TodoList;
