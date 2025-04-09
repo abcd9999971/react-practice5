@@ -1,35 +1,25 @@
-'use client';
-
-import  { useMemo, useState } from 'react';
-
-import type { TodoStyle } from '@/type';
-
 type TodoListProps = {
-  todos: TodoStyle[];
-  handleDelete: (ids: number[]) => void;
+  todos: {
+    id: number;
+    title: string;
+    date: string;
+  }[];
+  selectedIds : number[];
+  isAllSelected : boolean;
+  toggleSelect : (id: number) => void;
+  toggleSelectAll : () => void;
+  handleDeleteThis : (id: number) => void
+  handleDeleteSelected : () => void
 };
-
-export const TodoList = ({ todos, handleDelete }: TodoListProps) => {
-
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-
-  const allIds = todos.map((todo) => todo.id);
-  const isAllSelected = useMemo(() => (selectedIds.length === todos.length) && todos.length > 0, [selectedIds, todos]);
-
-  const toggleSelect = (id: number) => {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
-
-  const toggleSelectAll = () => {
-    setSelectedIds(isAllSelected ? [] : allIds);
-  };
-
-  const handleDeleteSelected = () => {
-    handleDelete(selectedIds);
-    setSelectedIds([]);
-  };
+export const TodoList = ({
+  todos,
+  selectedIds,
+  isAllSelected,
+  toggleSelect,
+  toggleSelectAll,
+  handleDeleteThis,
+  handleDeleteSelected
+  }: TodoListProps) => {
 
   return (
     <div>
@@ -55,8 +45,7 @@ export const TodoList = ({ todos, handleDelete }: TodoListProps) => {
             <span>{date}</span>
             <button
               onClick={() => {
-                handleDelete([id]);
-                setSelectedIds((prev) => prev.filter((item) => item !== id));
+                handleDeleteThis(id);
               }}
             >
               Delete
