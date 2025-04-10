@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 
 import type { TodoStyle } from '@/type.ts';
-import TodoAddForm from '@/components/TodoAddForm';
+import TodoAddFormContainer from '@/components/TodoAddFormContainer';
 import TodoListContainer from '@/components/TodoListContainer';
 
 
@@ -27,7 +27,7 @@ export const TodoApp = () => {
   return (
     <Box sx={{ padding: '20px',justifyContent: 'center', display: 'flex' }}>
       <Typography variant="h1">Todo app</Typography> 
-      <TodoAddForm handleAddTodo={handleAddTodo} />
+      <TodoAddFormContainer handleAddTodo={handleAddTodo} />
       <TodoListContainer todos = {todos} handleDelete = {handleDelete}/>
     </Box>
   );
