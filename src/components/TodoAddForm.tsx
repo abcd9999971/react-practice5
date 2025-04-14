@@ -1,4 +1,6 @@
+import Box from '@mui/material/Box';
 import { UseFormRegister , FieldErrors } from 'react-hook-form';
+
 
 type TodoAddFormProps = {
   onSubmit: () => void;
@@ -9,11 +11,13 @@ type TodoAddFormProps = {
 export const TodoAddForm = ({ onSubmit, errors,register }: TodoAddFormProps) => {
 
   return (
-    <form onSubmit={onSubmit}>
-      <input {...register('title', { required: true })} />
-      {errors.title && <span>🔺This field is required🔺</span>}
-      <button type="submit">追加</button>
-    </form>
+    <Box sx={{ padding: '20px',justifyContent: 'center', display: 'flex' }}>
+      <form onSubmit={onSubmit}>
+        <input {...register('title', { required: true })} />
+        {errors.title && <span>🔺This field is required🔺</span>}
+        <button type="submit">追加</button>
+      </form>
+    </Box>
   );
 };
 

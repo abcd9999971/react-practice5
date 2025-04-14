@@ -1,17 +1,19 @@
-import  { useMemo, useState } from 'react';
+import  { useMemo, useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
-import TodoList from '@/components/TodoList';
 
 import type { TodoStyle } from '@/type';
+import TodoList from '@/components/TodoList';
+
 
 type TodoListProps = {
   todos: TodoStyle[];
-  handleDelete: (ids: number[]) => void;
+  confirmDelete: (ids: number[]) => void;
+  onDeleteResult?: (deletedIds: number[]) => void;
 };
 
 
-export const TodoListContainer = ({ todos, handleDelete }: TodoListProps) => {
+export const TodoListContainer = ({ todos, confirmDelete}: TodoListProps) => {
 
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
@@ -29,13 +31,11 @@ export const TodoListContainer = ({ todos, handleDelete }: TodoListProps) => {
     };
   
     const handleDeleteSelected = () => {
-      handleDelete(selectedIds);
-      setSelectedIds([]);
+      confirmDelete(selectedIds);
     };
   
     const handleDeleteThis = (id: number) => {
-      handleDelete([id]);
-      setSelectedIds((prev) => prev.filter((item) => item !== id))
+      confirmDelete([id]);
     }
 
     return (

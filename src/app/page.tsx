@@ -4,12 +4,13 @@ import Box from '@mui/material/Box';
 
 import TodoApp  from '@/components/TodoApp';
 
-
 export default function Home() {
 
   return (
-    <Box sx={{ padding: '20px',justifyContent: 'center', display: 'flex' }}>
-      <TodoApp />
-    </Box>
+    <div>
+      <Box sx={{ padding: '20px',justifyContent: 'center'}}>
+        <TodoApp />
+      </Box>
+    </div>
   );
 }
