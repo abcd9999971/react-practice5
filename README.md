@@ -13,13 +13,19 @@
 
 
 ### 使用技術
-- React
-- TypeScript
-- Node
-- Eslint
-- Docker
+
+- Docker 26.1.4
+- Node.js 22.14.0
+- npm 10.9.2
+- TypeScript 5.8.3
+- React 18.3.1
+- Next.js 15.2.4
+- ESLint 8.57.1
+
 ### レポジトリの開発担当領域（フロントエンド, バックエンド, インフラなど）
+
 フロントエンド
+
 ### 環境構築方法および起動方法
 `npm install`依存関係のインストール
 `npm run dev`開発サーバーの起動
