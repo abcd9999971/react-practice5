@@ -74,10 +74,13 @@ export const TodoList = ({
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>
-
+        <Box sx={{
+          height: '40px',
+        }}>
         {(deleteIds.length > 0) && (
           <button onClick={handleDeleteSelected}>Delete Selected</button>
         )}
+        </Box>
       <DataGrid
         rows={todos}
         columns={columns}

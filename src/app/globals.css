@@ -25,7 +25,7 @@ body {
 
 /*ボタン設定*/
 button {
-  padding: 10px 16px;
+  padding: 14px 18px;
   background: var(--primary-color);
   color: white;
   border: none;
