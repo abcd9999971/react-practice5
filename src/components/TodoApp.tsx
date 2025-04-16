@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import React from 'react';
+import React , { useState } from 'react';
 
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 
+import DeleteDialog from './DeleteDialog';
+
 import type { TodoStyle, DeleteDialogProps } from '@/type.ts';
+
 import TodoAddFormContainer from '@/components/TodoAddFormContainer';
 import TodoListContainer from '@/components/TodoListContainer';
-import DeleteDialog from './DeleteDialog';
 
 
 export const TodoApp = () => {
 
   const [todos, setTodos] = useState<TodoStyle[]>([]);
-  const [open, setOpen] = useState(false);
   const [deleteIds, setDeleteIds] = useState<number[]>([]);
   const [DialogComponent, setDialogComponent] = React.useState<DeleteDialogProps | undefined>()
 
@@ -50,10 +50,6 @@ export const TodoApp = () => {
       }
     };
 
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <Box sx={{ padding: '20px',justifyContent: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
