@@ -3,3 +3,10 @@ export type TodoStyle  = {
     title: string;
     date: string;
 };
+
+
+export type DeleteDialogProps = {
+    onClose: (value: string) => void
+    title?: string
+    message?: string
+  }

@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import { Alert } from '@mui/material';
 import { UseFormRegister , FieldErrors } from 'react-hook-form';
 
 
@@ -14,7 +15,8 @@ export const TodoAddForm = ({ onSubmit, errors,register }: TodoAddFormProps) => 
     <Box sx={{ padding: '20px',justifyContent: 'center', display: 'flex' }}>
       <form onSubmit={onSubmit}>
         <input {...register('title', { required: true })} />
-        {errors.title && <span>🔺This field is required🔺</span>}
+        {errors.title && 
+          <Alert severity="warning">入力してください。</Alert>}
         <button type="submit">追加</button>
       </form>
     </Box>

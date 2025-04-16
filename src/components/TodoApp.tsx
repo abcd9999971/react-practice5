@@ -1,37 +1,55 @@
 import { useState } from 'react';
+import React from 'react';
 
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 
-import type { TodoStyle } from '@/type.ts';
-
+import type { TodoStyle, DeleteDialogProps } from '@/type.ts';
 import TodoAddFormContainer from '@/components/TodoAddFormContainer';
 import TodoListContainer from '@/components/TodoListContainer';
 import DeleteDialog from './DeleteDialog';
+
 
 export const TodoApp = () => {
 
   const [todos, setTodos] = useState<TodoStyle[]>([]);
   const [open, setOpen] = useState(false);
   const [deleteIds, setDeleteIds] = useState<number[]>([]);
+  const [DialogComponent, setDialogComponent] = React.useState<DeleteDialogProps | undefined>()
 
 
   const handleAddTodo = (data:TodoStyle) => {
       setTodos((prevTodos) => [...prevTodos, data]);
     };  
 
-  const handleDelete = () => {
+  const handleDelete = (ids:number[]) => {
     // if deleteIds is empty, show an alert
-    if (deleteIds.length > 0) {
-      setTodos((prevTodos) => prevTodos.filter((todo) => !deleteIds.includes(todo.id)));
-    } else {
-      alert("削除するtodoがありません");
-    }
+  setTodos((prevTodos) => prevTodos.filter((todo) => !ids.includes(todo.id)));
   };
 
-  const ConfirmDelete = (ids:number[]) => {
-    setOpen(true);
-  };
+  const ConfirmDelete = 
+    async (ids:number[], isOne : boolean) => {
+      const ok = await await new Promise<string>((resolve) => {
+        setDialogComponent({
+          onClose: resolve,
+          title : '削除確認',
+          message : '本当に削除しますか？',
+        });
+      })
+      setDialogComponent(undefined);
+      if (ok) {
+        console.log('OK');
+        handleDelete(ids);
+        if (isOne && deleteIds.includes(ids[0])) {
+            setDeleteIds((prevDeleteIds) => prevDeleteIds.filter((id) => id !== ids[0]));
+        } else if (!isOne){
+          setDeleteIds([]);
+        }
+      } else {
+        console.log('Cancel');
+      }
+    };
+
 
   const handleClose = () => {
     setOpen(false);
@@ -40,7 +58,7 @@ export const TodoApp = () => {
   return (
     <Box sx={{ padding: '20px',justifyContent: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant="h2">Todo app</Typography> 
-      <DeleteDialog open={open} onClose={handleClose} onDelete={handleDelete} />
+      {DialogComponent && <DeleteDialog {...DialogComponent} />}
       <TodoAddFormContainer handleAddTodo={handleAddTodo} />
       <TodoListContainer todos = {todos} confirmDelete = {ConfirmDelete} deleteIds = {deleteIds} setDeleteIds = {setDeleteIds} />
     </Box>

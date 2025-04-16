@@ -8,7 +8,7 @@ import TodoList from '@/components/TodoList';
 
 type TodoListProps = {
   todos: TodoStyle[];
-  confirmDelete: (ids: number[]) => void;
+  confirmDelete: (ids: number[],isOne:boolean) => void;
   onDeleteResult?: (deletedIds: number[]) => void;
   deleteIds: number[];
   setDeleteIds: React.Dispatch<React.SetStateAction<number[]>>;
@@ -31,11 +31,11 @@ export const TodoListContainer = ({ todos, confirmDelete, deleteIds, setDeleteId
     };
   
     const handleDeleteSelected = () => {
-      confirmDelete(deleteIds);
+      confirmDelete(deleteIds, false);
     };
   
     const handleDeleteThis = (id: number) => {
-      confirmDelete([id]);
+      confirmDelete([id], true);
     }
 
     return (

@@ -1,33 +1,24 @@
-import { Dialog,  DialogContent, DialogTitle} from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, Button } from '@mui/material'
+import type { DeleteDialogProps }  from '@/type.ts';
 
-type DeleteDialogProps = {
-    open: boolean;
-    onClose: () => void;
-    onDelete: () => void;
-};
 
-export const  DeleteDialog = ({ open , onClose , onDelete}:DeleteDialogProps ) => {
-    return (
-    <Dialog open={open} onClose={onClose}>
-        <DialogTitle>警告</DialogTitle>
+export function DeleteDialog(props: DeleteDialogProps) {
+  const { onClose, title, message } = props
+
+  return (
+    <Dialog open onClose={() => onClose('close')}>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>
-            <p>本当に削除しますか？</p>
-            <button
-                onClick={() => {
-                    onClose();
-                }
-            }
-            >キャンセル</button>
-            <button
-                onClick={() => {
-                    onDelete();
-                    onClose();
-                }
-            }
-            >削除</button>
-        </DialogContent>
+        <DialogContentText>{message}</DialogContentText>
+    </DialogContent>
+    <DialogActions>
+         <Button onClick={() => onClose('ok')}>OK</Button>
+         <Button onClick={() => onClose('cancel')} autoFocus>
+          Cancel
+        </Button>
+    </DialogActions>
     </Dialog>
-    );
+  )
 }
 
-export default DeleteDialog;
+export default DeleteDialog
