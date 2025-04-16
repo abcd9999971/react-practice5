@@ -21,7 +21,9 @@ export const TodoAddForm = ({ onSubmit, errors,register }: TodoAddFormProps) => 
       fontSize: '20px',
       alignItems: 'center'
       }}>
-      
+      <Box sx={{ width: '80%', height: '40px', marginTop: '10px' }}>
+        {errors.title && (<Alert severity="warning">未入力</Alert>)}
+      </Box>
       <form onSubmit={onSubmit}>
         <input  
           style={{ 
@@ -35,9 +37,7 @@ export const TodoAddForm = ({ onSubmit, errors,register }: TodoAddFormProps) => 
         <button type="submit" >追加</button>
       </form>
       
-        <Box sx={{ width: '80%', height: '40px', marginTop: '10px' }}>
-        {errors.title && (<Alert severity="warning">未入力</Alert>)}
-        </Box>
+
     </Box>
   );
 };

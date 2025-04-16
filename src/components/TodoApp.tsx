@@ -17,13 +17,11 @@ export const TodoApp = () => {
   const [deleteIds, setDeleteIds] = useState<number[]>([]);
   const [DialogComponent, setDialogComponent] = React.useState<DeleteDialogProps | undefined>()
 
-
   const handleAddTodo = (data:TodoStyle) => {
       setTodos((prevTodos) => [...prevTodos, data]);
     };  
 
   const handleDelete = (ids:number[]) => {
-    // if deleteIds is empty, show an alert
   setTodos((prevTodos) => prevTodos.filter((todo) => !ids.includes(todo.id)));
   };
 
