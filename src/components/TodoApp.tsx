@@ -31,12 +31,10 @@ export const TodoApp = () => {
 
   const ConfirmDelete = (ids:number[]) => {
     setOpen(true);
-    setDeleteIds(ids);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setDeleteIds([]);
   };
 
   return (
@@ -44,7 +42,7 @@ export const TodoApp = () => {
       <Typography variant="h2">Todo app</Typography> 
       <DeleteDialog open={open} onClose={handleClose} onDelete={handleDelete} />
       <TodoAddFormContainer handleAddTodo={handleAddTodo} />
-      <TodoListContainer todos = {todos} confirmDelete = {ConfirmDelete} />
+      <TodoListContainer todos = {todos} confirmDelete = {ConfirmDelete} deleteIds = {deleteIds} setDeleteIds = {setDeleteIds} />
     </Box>
   );
 }

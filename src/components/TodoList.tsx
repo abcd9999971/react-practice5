@@ -8,7 +8,7 @@ type TodoListProps = {
     title: string;
     date: string;
   }[];
-  selectedIds : number[];
+  deleteIds : number[];
   isAllSelected : boolean;
   toggleSelect : (id: number) => void;
   toggleSelectAll : () => void;
@@ -19,7 +19,7 @@ type TodoListProps = {
 
 export const TodoList = ({
   todos,
-  selectedIds,
+  deleteIds,
   isAllSelected,
   toggleSelect,
   toggleSelectAll,
@@ -42,7 +42,7 @@ export const TodoList = ({
       renderCell: (params) => (
         <input
           type="checkbox"
-          checked={selectedIds.includes(params.row.id)}
+          checked={deleteIds.includes(params.row.id)}
           onChange={() => toggleSelect(params.row.id)}
         />
       ),
@@ -75,7 +75,7 @@ export const TodoList = ({
   return (
     <Box sx={{ height: 400, width: '100%' }}>
 
-        {(selectedIds.length > 0) && (
+        {(deleteIds.length > 0) && (
           <button onClick={handleDeleteSelected}>Delete Selected</button>
         )}
       <DataGrid

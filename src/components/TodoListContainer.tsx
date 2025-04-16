@@ -1,4 +1,4 @@
-import  { useMemo, useState, useEffect } from 'react';
+import  { useMemo } from 'react';
 
 import Box from '@mui/material/Box';
 
@@ -10,28 +10,28 @@ type TodoListProps = {
   todos: TodoStyle[];
   confirmDelete: (ids: number[]) => void;
   onDeleteResult?: (deletedIds: number[]) => void;
+  deleteIds: number[];
+  setDeleteIds: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
 
-export const TodoListContainer = ({ todos, confirmDelete}: TodoListProps) => {
-
-    const [selectedIds, setSelectedIds] = useState<number[]>([]);
+export const TodoListContainer = ({ todos, confirmDelete, deleteIds, setDeleteIds}: TodoListProps) => {
 
     const allIds = todos.map((todo) => todo.id);
-    const isAllSelected = useMemo(() => (selectedIds.length === todos.length) && todos.length > 0, [selectedIds, todos]);
+    const isAllSelected = useMemo(() => (deleteIds.length === todos.length) && todos.length > 0, [deleteIds, todos]);
   
     const toggleSelect = (id: number) => {
-      setSelectedIds((prev) =>
-        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      setDeleteIds((deleteIds: number[]) =>
+        deleteIds.includes(id) ? deleteIds.filter((item: number) => item !== id) : [...deleteIds, id]
       );
     };
   
     const toggleSelectAll = () => {
-      setSelectedIds(isAllSelected ? [] : allIds);
+      setDeleteIds(isAllSelected ? [] : allIds);
     };
   
     const handleDeleteSelected = () => {
-      confirmDelete(selectedIds);
+      confirmDelete(deleteIds);
     };
   
     const handleDeleteThis = (id: number) => {
@@ -42,7 +42,7 @@ export const TodoListContainer = ({ todos, confirmDelete}: TodoListProps) => {
         <Box>
             <TodoList
             todos={todos}
-            selectedIds={selectedIds}
+            deleteIds={deleteIds}
             isAllSelected={isAllSelected}   
             toggleSelect = {toggleSelect}
             toggleSelectAll = {toggleSelectAll}
