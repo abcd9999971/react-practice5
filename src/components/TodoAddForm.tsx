@@ -1,4 +1,3 @@
-import { Alert } from '@mui/material';
 import Box from '@mui/material/Box';
 import { UseFormRegister , FieldErrors } from 'react-hook-form';
 
@@ -12,32 +11,52 @@ type TodoAddFormProps = {
 export const TodoAddForm = ({ onSubmit, errors,register }: TodoAddFormProps) => {
 
   return (
-    <Box sx={{ 
-      padding: '20px',
-      width: '30%',
-      justifyContent: 'center', 
-      display: 'flex',
-      flexDirection: 'column', 
-      fontSize: '20px',
-      alignItems: 'center'
-      }}>
-      <Box sx={{ width: '80%', height: '40px', marginTop: '10px' }}>
-        {errors.title && (<Alert severity="warning">未入力</Alert>)}
-      </Box>
-      <form onSubmit={onSubmit}>
-        <input  
-          style={{ 
-            width: '80%',
-            fontSize: '20px',
-            padding: '10px',
+    <Box sx={{
+      padding: '10px',
+    }}>   
+      <form 
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit();
+          (e.target as HTMLFormElement).reset();
+        }}
+      >
+        <Box sx={{ 
+          width: '100%', 
+          marginBottom: '10px', 
+          fontSize : '18px',
+          padding: '10px',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'stretch',
+          justifyContent: 'space-between',
+          '& input': {
+            width: '75%',
             borderRadius: '5px',
-          }} 
-          placeholder='TODOを入力してください'
-          {...register('title', { required: true })} />
-        <button type="submit" >追加</button>
-      </form>
-      
+            border: errors.title ? '2px solid red' : '1px solid #ccc',
+            fontSize: 'inherit',
+            padding: '10px',
+            outline: 'none',
+            '&:focus': {
+              border: errors.title ? '2px solid red' : '2px solid black',
+              },
+            },
+          '& button': {
+            width: '20%',
+            fontSize: 'inherit',
+            padding: '10px',
+          },
+          }}>
+          <input  
+            placeholder={errors.title ? '未入力' : 'TODO入力してください'}
+            {...register('title', { required: true })} />
+          <button type="submit" >
+          追加
+          </button>
+        </Box>
 
+
+      </form>
     </Box>
   );
 };
