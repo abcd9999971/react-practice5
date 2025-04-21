@@ -18,6 +18,7 @@ export const TodoAddFormContainer = ({ handleAddTodo }: TodoAddFormProps) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<{ title: string }>({
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
@@ -30,7 +31,8 @@ export const TodoAddFormContainer = ({ handleAddTodo }: TodoAddFormProps) => {
       date: new Date().toISOString().split('T')[0] 
     });
     indexRef.current += 1;
-  };
+    reset();
+    };
 
   return (
     <TodoAddForm

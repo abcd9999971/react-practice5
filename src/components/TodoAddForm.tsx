@@ -14,13 +14,7 @@ export const TodoAddForm = ({ onSubmit, errors,register }: TodoAddFormProps) => 
     <Box sx={{
       padding: '10px',
     }}>   
-      <form 
-        onSubmit={(e) => {
-          e.preventDefault();
-          onSubmit();
-          (e.target as HTMLFormElement).reset();
-        }}
-      >
+      <form onSubmit={onSubmit}>
         <Box sx={{ 
           width: '100%', 
           marginBottom: '10px', 
@@ -50,7 +44,7 @@ export const TodoAddForm = ({ onSubmit, errors,register }: TodoAddFormProps) => 
           <input  
             placeholder={errors.title ? '未入力' : 'TODO入力してください'}
             {...register('title', { required: true })} />
-          <button type="submit" >
+          <button type="submit">
           追加
           </button>
         </Box>
