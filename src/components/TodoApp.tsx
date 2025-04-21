@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import { useState } from 'react';
 
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -15,7 +15,7 @@ export const TodoApp = () => {
 
   const [todos, setTodos] = useState<TodoStyle[]>([]);
   const [deleteIds, setDeleteIds] = useState<number[]>([]);
-  const [DialogComponent, setDialogComponent] = React.useState<DeleteDialogProps | undefined>()
+  const [DialogComponent, setDialogComponent] = useState<DeleteDialogProps | undefined>()
 
   const handleAddTodo = (data:TodoStyle) => {
       setTodos((prevTodos) => [...prevTodos, data]);
@@ -36,7 +36,6 @@ export const TodoApp = () => {
       })
       setDialogComponent(undefined);
       if (ok) {
-        console.log('OK');
         handleDelete(ids);
         if (isOne && deleteIds.includes(ids[0])) {
             setDeleteIds((prevDeleteIds) => prevDeleteIds.filter((id) => id !== ids[0]));
