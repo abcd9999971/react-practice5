@@ -27,7 +27,7 @@ export const TodoApp = () => {
 
   const ConfirmDelete = 
     async (ids:number[], isOne : boolean) => {
-      const ok = await await new Promise<string>((resolve) => {
+      const ok = await new Promise<boolean>((resolve) => {
         setDialogComponent({
           onClose: resolve,
           title : '削除確認',
@@ -42,8 +42,6 @@ export const TodoApp = () => {
         } else if (!isOne){
           setDeleteIds([]);
         }
-      } else {
-        console.log('Cancel');
       }
     };
 

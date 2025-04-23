@@ -7,14 +7,14 @@ export function DeleteDialog(props: DeleteDialogProps) {
   const { onClose, title, message } = props
 
   const ok = () => {
-    onClose('ok')
+    onClose(true)
   }
   const cancel = () => {
-    onClose('cancel')
+    onClose(false)
   }
 
   return (
-    <Dialog open onClose={() => onClose('close')}>
+    <Dialog open onClose={() => onClose(true)}>
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>
         <DialogContentText>{message}</DialogContentText>

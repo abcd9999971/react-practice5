@@ -6,7 +6,7 @@ export type TodoStyle  = {
 
 
 export type DeleteDialogProps = {
-    onClose: (value: string) => void
+    onClose: (value: boolean) => void
     title?: string
     message?: string
   }
