@@ -7,7 +7,7 @@ import TodoApp  from '@/components/TodoApp';
 export default function Home() {
 
   return (
-      <Box sx={{ padding: '20px',justifyContent: 'center'}}>
+      <Box>
         <TodoApp />
       </Box>
   );

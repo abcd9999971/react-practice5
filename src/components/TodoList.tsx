@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
@@ -13,8 +15,7 @@ type TodoListProps = {
   toggleSelect : (id: number) => void;
   toggleSelectAll : () => void;
   handleDeleteThis : (id: number) => void
-  handleDeleteSelected : () => void
-  
+  deleteSelectedButton : JSX.Element | null;
 };
 
 export const TodoList = ({
@@ -24,7 +25,7 @@ export const TodoList = ({
   toggleSelect,
   toggleSelectAll,
   handleDeleteThis,
-  handleDeleteSelected
+  deleteSelectedButton
   }: TodoListProps) => {
 
 
@@ -57,29 +58,25 @@ export const TodoList = ({
       field: 'delete',
       headerName: 'Delete',
       width: 100,
-      renderCell: (params) => (
-        <button
-          onClick={() => {
-            handleDeleteThis(params.row.id);
-          }}
-        >
-          Delete
-        </button>
-      )
+      renderCell: (params) => {
+        const handleDeleteClick = () => {
+          handleDeleteThis(params.row.id);
+        };
+        return (
+          <button onClick={handleDeleteClick}>
+            Delete
+          </button>
+        );
+      },
     }
-
   ];
-
-  
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>
         <Box sx={{
           height: '40px',
         }}>
-        {(deleteIds.length > 0) && (
-          <button onClick={handleDeleteSelected}>Delete Selected</button>
-        )}
+          {deleteSelectedButton}
         </Box>
       <DataGrid
         rows={todos}

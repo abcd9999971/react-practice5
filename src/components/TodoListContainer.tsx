@@ -39,6 +39,10 @@ export const TodoListContainer = ({ todos, confirmDelete, deleteIds, setDeleteId
       confirmDelete([id], true);
     }
 
+    const deleteSelectedButton = deleteIds.length > 0 ? (
+      <button onClick={handleDeleteSelected}>Delete Selected</button>
+    ) : null;
+
     return (
         <Box>
             <TodoList
@@ -48,7 +52,7 @@ export const TodoListContainer = ({ todos, confirmDelete, deleteIds, setDeleteId
             toggleSelect = {toggleSelect}
             toggleSelectAll = {toggleSelectAll}
             handleDeleteThis = {handleDeleteThis}
-            handleDeleteSelected = {handleDeleteSelected}
+            deleteSelectedButton = {deleteSelectedButton}
             />
         </Box>
     );
