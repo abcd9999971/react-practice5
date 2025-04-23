@@ -1,3 +1,4 @@
+// eslint-disable-next-line camelcase
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import type { Metadata } from 'next';
